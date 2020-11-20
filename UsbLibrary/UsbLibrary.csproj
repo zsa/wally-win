@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IntelHexFormatReader" Version="2.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Device.Net\src\Device.Net\Device.Net.csproj" />
+    <ProjectReference Include="..\..\Device.Net\src\Hid.Net\Hid.Net.csproj" />
+    <ProjectReference Include="..\..\Device.Net\src\Usb.Net\Usb.Net.csproj" />
+    <ProjectReference Include="..\UtilsLibrary\UtilsLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

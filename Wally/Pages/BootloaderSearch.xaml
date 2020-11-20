@@ -1,0 +1,17 @@
+﻿<Page x:Class="Wally.Pages.BootloaderSearch"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:converters="clr-namespace:Wally.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="580"
+      Title="Press your keyboard's reset button">
+
+    <StackPanel VerticalAlignment="Center">
+        <Image Source="{Binding SelectedDevice.Pid, Converter={converters:PidToResetIconConverter}}" Height="100" Width="150" HorizontalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5">Press your keyboard's reset button</TextBlock>
+        <TextBlock HorizontalAlignment="Center" FontSize="14">You are going to need a paperclip for this.</TextBlock>
+        <TextBlock HorizontalAlignment="Center" FontSize="14" Text="{Binding SelectedDevice.Pid, Converter={converters:PidToResetInstructionConverter}}"/>
+    </StackPanel>
+</Page>

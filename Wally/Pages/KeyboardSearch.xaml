@@ -1,0 +1,15 @@
+﻿<Page x:Class="Wally.Pages.KeyboardSearch"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="580"
+      Title="Looking for compatible keyboards">
+
+    <StackPanel VerticalAlignment="Center">
+        <Image Source="/Resources/search.png" Height="96" Width="100" />
+        <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5">Looking for compatible keyboards</TextBlock>
+        <TextBlock HorizontalAlignment="Center" FontSize="14">Hold on while your keyboard is getting detected</TextBlock>
+    </StackPanel>
+</Page>

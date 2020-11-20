@@ -1,0 +1,40 @@
+﻿<Page x:Class="Wally.Pages.KeyboardSelect"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:converters="clr-namespace:Wally.Converters"
+      xmlns:models="clr-namespace:Wally.Models"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="580"
+      Title="Select a keyboard to flash">
+    <Page.Resources>
+        <converters:PidToKeyboardIconConverter x:Key="PidToKeyboardIconConverter" />
+        <DataTemplate x:Key="KeyboardEntry">
+            <StackPanel Cursor="Arrow" Width="130" x:Name="keyboard">
+                <Image Width="80" Height="80" Margin="0,5" HorizontalAlignment="Center" Source="{Binding Path=Pid, Converter={StaticResource PidToKeyboardIconConverter}}" />
+                <TextBlock Margin="0,0,0,5" Text="{Binding Path=FriendlyName}" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <StackPanel VerticalAlignment="Center" x:Name="frame">
+        <ListView ItemsSource="{Binding ConnectedDevices}" Background="{x:Null}" BorderBrush="{x:Null}" SelectedItem="{Binding SelectedDevice}" ItemTemplate="{StaticResource KeyboardEntry}">
+            <ListView.ItemContainerStyle>
+                <Style>
+                    <Style.Triggers>
+                        <Trigger Property="Control.IsMouseOver" Value="True">
+                            <Setter Property="Control.Background" Value="Transparent" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+        <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,15,0,5">Select Keyboard</TextBlock>
+        <TextBlock HorizontalAlignment="Center" FontSize="14">There are several keyboards connected that are compatible</TextBlock>
+    </StackPanel>
+</Page>

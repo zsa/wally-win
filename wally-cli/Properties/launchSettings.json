@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "wally-cli": {
+      "commandName": "Project",
+      "commandLineArgs": "ergodox.hex"
+    }
+  }
+}
