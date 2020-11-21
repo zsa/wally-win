@@ -100,9 +100,10 @@ namespace Wally.Models
 
         public async Task Start()
         {
-            FlashMessage = String.Empty;
-            FlashPercentage = 0;
-            ConnectedDevices = new List<Device>();
+                ConnectedDevices = new List<Device>();
+                FlashMessage = String.Empty;
+                FlashPercentage = 0;
+                SelectedDevice = null;
             Step = FlashingStep.SearchKeyboard;
             await Enumerate();
             // if there's only one device, skip the Keyboard selection step.
