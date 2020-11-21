@@ -3,15 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Wally.Pages"
+      xmlns:converters="clr-namespace:Wally.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="580"
       Title="Flashing firmware">
 
     <StackPanel VerticalAlignment="Center">
         <Image Source="/Resources/flash.png" Height="100" Width="100" />
-        <ProgressBar Value="{Binding FlashPercentage}" Height="10" Background="#10000000" Foreground="#FFFFFFFF" BorderBrush="{x:Null}" Margin="0,10,0,0" HorizontalAlignment="Center" Width="335"/>
+        <ProgressBar Value="{Binding FlashPercentage}" Height="10" Background="#10000000" Foreground="#FFFFFFFF" BorderBrush="{x:Null}" Margin="0,10,0,0" HorizontalAlignment="Center" Width="335" IsIndeterminate="{Binding FlashPercentage, Converter={converters:PercentageToProgressTypeConverter}}"/>
         <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5" Text="{Binding FlashMessage}"/>
-        <TextBlock HorizontalAlignment="Center" FontSize="14">Flashing firmware, please don't unplug your keyboard.</TextBlock>
+        <TextBlock HorizontalAlignment="Center" FontSize="14">Please don't unplug your keyboard.</TextBlock>
     </StackPanel>
 </Page>
