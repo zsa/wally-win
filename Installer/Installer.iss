@@ -5,6 +5,7 @@
 #define MyAppVersion "3.0.0Beta1"
 #define MyAppPublisher "ZSA Technology Labs"
 #define MyAppURL "https://www.zsa.io"
+#define MyAppExeName "Wally.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -34,7 +35,13 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "Resources\*.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Resources\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
+[Icons]
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
 Filename: {app}\wdi-simple.exe; Flags: "runhidden"; Parameters: " -x --type 0 --name ""Keyboard in reset mode"" --vid 0x0483 --pid 0xDF11"; StatusMsg: "Installing driver files";
