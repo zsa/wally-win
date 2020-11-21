@@ -144,7 +144,7 @@ namespace Wally.Models
 
                 while (enumerator.Devices.Count != 1)
                 {
-                    await Task.Delay(500);
+                    await Task.Delay(10);
                     await enumerator.Run(_firmware.Target);
                 }
                 var device = enumerator.Devices.First();
@@ -164,7 +164,7 @@ namespace Wally.Models
             while (enumerator.Devices.Count == 0)
             {
                 await enumerator.Run(Target);
-                await Task.Delay(1000);
+                await Task.Delay(10);
             }
 
             enumerator.Devices.ForEach(_dev => ConnectedDevices.Add(new Device((int)_dev.Info.ProductId, _dev.FriendlyName, _dev.Target)));
