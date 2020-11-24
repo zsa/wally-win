@@ -21,21 +21,13 @@ namespace Wally
         }
         public MainWindow()
         {
-            var model = new StateViewModel(AppVersion);
+            string filePath = string.Empty;
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                var filePath = args[1];
-                if (File.Exists(filePath))
-                {
-                    var extension = System.IO.Path.GetExtension(filePath);
-                    if (extension == ".hex" || extension == ".bin")
-                    {
-                        model.SelectFirmare(filePath);
-                    }
-                }
+                filePath = args[1];
             }
-            DataContext = model;
+            DataContext = new StateViewModel(AppVersion, filePath);
             InitializeComponent();
         }
 

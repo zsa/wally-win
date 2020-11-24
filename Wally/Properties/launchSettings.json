@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Wally": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\flori\\Downloads\\ergodox_ez_ergodox-ez-default-layout_LMYA0_95vmO.hex"
+    }
+  }
+}

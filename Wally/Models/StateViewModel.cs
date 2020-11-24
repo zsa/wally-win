@@ -145,15 +145,22 @@ namespace Wally.Models
                 Step = FlashingStep.SelectFirmware;
             }
         }
-        public StateViewModel(string appVersion)
+        public StateViewModel(string appVersion, string filePath)
         {
             AppVersion = appVersion;
             Logger = Logger.Instance();
             Logger.Log(LogSeverity.Info, "Application started");
-            Task.Run(async () =>
+            if(filePath == String.Empty)
             {
-                await Start();
-            });
+                Task.Run(async () =>
+                {
+                    await Start();
+                });
+            }
+            else
+            {
+                SelectFirmare(filePath);
+            }
         }
         public void SelectKeyboard()
         {
@@ -166,6 +173,12 @@ namespace Wally.Models
             {
                 Logger.Log(LogSeverity.Info, $"Selected firmware, path: {filePath}");
                 _firmware = new Firmware(filePath);
+                // If the file was provided as an argument, the keyboard step was skipped, as
+                // a result we need to create one that has the same target as the firmware file
+                if(SelectedDevice == null)
+                {
+                    SelectedDevice = new Device(0xDF11, "Keyboard in reset mode", _firmware.Target);
+                }
                 Step = FlashingStep.SearchBootloader;
                 Logger.Log(LogSeverity.Info, $"Firmware file is valid for {_firmware.Target}.");
                 Flash();
