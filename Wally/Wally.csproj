@@ -7,10 +7,20 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Wally.ico</ApplicationIcon>
     <Version>3.0.0</Version>
+    <Authors>Florian Didron</Authors>
+    <Company>ZSA Technology Labs, Inc</Company>
+    <PackageProjectUrl>https://www.zsa.io/wally/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zsa/wally-win</RepositoryUrl>
+    <PackageLicenseFile>license.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\complete.png" />
+    <None Remove="Resources\error.png" />
+    <None Include="..\license.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +31,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\ergodox-reset.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\error.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\file.png">
@@ -54,12 +67,39 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.3.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UsbLibrary\UsbLibrary.csproj" />
     <ProjectReference Include="..\UtilsLibrary\UtilsLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\Error.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Pages\Error.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

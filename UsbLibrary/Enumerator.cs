@@ -16,6 +16,8 @@ namespace UsbLibrary
         public async Task Run(Target target)
         {
             Devices = new List<Device> { };
+            var logger = Logger.Instance();
+
 
             if (target == Target.stm32)
             {

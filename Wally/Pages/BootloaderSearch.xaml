@@ -9,7 +9,7 @@
       Title="Press your keyboard's reset button">
 
     <StackPanel VerticalAlignment="Center">
-        <Image Source="{Binding SelectedDevice.Pid, Converter={converters:PidToResetIconConverter}}" Height="100" Width="150" HorizontalAlignment="Center" />
+        <Image Source="{Binding SelectedDevice.Pid, Converter={converters:PidToResetIconConverter}}" Height="100" Width="150" HorizontalAlignment="Left" Margin="225,0,0,0" />
         <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5">Press your keyboard's reset button</TextBlock>
         <TextBlock HorizontalAlignment="Center" FontSize="14">You are going to need a paperclip for this.</TextBlock>
         <TextBlock HorizontalAlignment="Center" FontSize="14" Text="{Binding SelectedDevice.Pid, Converter={converters:PidToResetInstructionConverter}}"/>

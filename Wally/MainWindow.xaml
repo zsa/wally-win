@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wally" xmlns:converters="clr-namespace:Wally.Converters"
         mc:Ignorable="d"
+        Loaded="OnLoad"
         Title="Wally" Height="450" Width="620" ResizeMode="NoResize" FontSize="14">
     <Window.Background>
         <RadialGradientBrush RadiusY="1" GradientOrigin="0.5,0" RadiusX=".9">
@@ -22,7 +23,7 @@
             <RowDefinition Height="28" />
         </Grid.RowDefinitions>
         <Frame Padding="30" Grid.Row="0" x:Name="MainFrame" NavigationUIVisibility="Hidden" Content="{Binding Step, Converter={converters:StepToPageConverter}}"/>
-        <Grid Grid.Row="1" Width="100">
+        <Grid Grid.Row="1" Width="100" Visibility="{Binding Step, Converter={converters:StepPillsVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -42,14 +43,23 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource LightGreyText}" Text="KEYBOARD:" Margin="10,0,5,0" />
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource LightGreyText}" Text="KEYBOARD:" Margin="5,0" />
             <TextBlock VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource WhiteText}" Text="{Binding StatusLabel}"></TextBlock>
             <TextBlock VerticalAlignment="Center" Grid.Column="3" Foreground="#FFFFFFFF" MouseLeftButtonUp="Reset_Click" Visibility="{Binding Step, Converter={converters:ResetButtonVisibilityConverter}}">
                 <TextBlock.TextDecorations>
                     <TextDecoration/>
                 </TextBlock.TextDecorations>Reset</TextBlock>
-            <TextBlock VerticalAlignment="Center" Grid.Column="4" Foreground="#FFFFD667" Style="{StaticResource YellowText}" Margin="10,0,10,0">v3.0.0Beta1</TextBlock>
+            <TextBlock VerticalAlignment="Center" Grid.Column="4" Foreground="#FFFFFFFF" MouseLeftButtonUp="Logs_Click" Margin="10,0,0,0">
+                <TextBlock.TextDecorations>
+                    <TextDecoration/>
+                </TextBlock.TextDecorations>Logs</TextBlock>
+            <TextBlock VerticalAlignment="Center" Grid.Column="5" Foreground="#FFFFD667" Style="{StaticResource YellowText}" Margin="10,0,5,0" Text="{Binding StatusBarVersion}" MouseLeftButtonUp="Version_MouseLeftButtonUp">
+                <TextBlock.TextDecorations>
+                    <TextDecoration/>
+                </TextBlock.TextDecorations>
+            </TextBlock>
         </Grid>
     </Grid>
 </Window>

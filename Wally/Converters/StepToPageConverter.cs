@@ -23,6 +23,8 @@ namespace Wally.Converters
                 FlashingStep.SearchBootloader => new BootloaderSearch(),
                 FlashingStep.Flash => new Flashing(),
                 FlashingStep.Complete => new Complete(),
+                FlashingStep.Error => new Error(),
+                FlashingStep.DisplayLogs => new Logs(),
                 _ => null
             };
         }

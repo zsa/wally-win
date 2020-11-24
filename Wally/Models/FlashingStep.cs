@@ -12,6 +12,7 @@ namespace Wally.Models
         SearchBootloader,
         Flash,
         Complete,
+        DisplayLogs,
         Error
     }
 }

@@ -5,14 +5,13 @@ using Wally.Models;
 
 namespace Wally.Converters
 {
-    public class ResetButtonVisibilityConverter : BaseValueConverter<ResetButtonVisibilityConverter>
+    public class StepPillsVisibilityConverter : BaseValueConverter<StepPillsVisibilityConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var step = (FlashingStep)value;
-            return step == FlashingStep.DisplayLogs || step == FlashingStep.SearchKeyboard || step == FlashingStep.Flash || step == FlashingStep.Complete
-                ? Visibility.Collapsed
-                : (object)Visibility.Visible;
+            if (step == FlashingStep.DisplayLogs) return Visibility.Collapsed;
+            return Visibility.Visible;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

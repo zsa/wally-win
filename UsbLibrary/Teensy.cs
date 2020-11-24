@@ -32,7 +32,6 @@ namespace UsbLibrary
                 byte[] block = new byte[ErgodoxBlockSize + 2];
                 block[0] = (byte)(addr & 0XFF);
                 block[1] = (byte)((addr >> 8) & 0XFF);
-                //System.Array.Copy(firmware.Bytes, (blockNumber * BLOCK_SIZE), block, 0, BLOCK_SIZE);
                 System.Array.Copy(firmware.Bytes, addr, block, 2, ErgodoxBlockSize);
                 await device.HidHandle.WriteReportAsync(block, HidReportId);
                 if(addr == 0)

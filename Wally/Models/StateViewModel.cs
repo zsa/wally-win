@@ -18,6 +18,17 @@ namespace Wally.Models
     {
 
         private Firmware _firmware;
+
+        public Logger Logger { get; set; }
+
+        public string AppVersion { get; set; }
+        public string StatusBarVersion {
+            get
+            {
+                return $"v{AppVersion}";
+            }
+        }
+
         public FlashingStep Step { get; set; }
 
         public IList<Device> ConnectedDevices { get; set; }
@@ -35,7 +46,10 @@ namespace Wally.Models
             {
                 _selectedDevice = value;
                 if (value != null)
+                {
                     Step = FlashingStep.SelectFirmware;
+                    Logger.Log(LogSeverity.Info, $"Device selected as a flashing target: {value.FriendlyName} | {value.Target}");
+                }
             }
         }
 
@@ -98,12 +112,30 @@ namespace Wally.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private FlashingStep _previousStep;
+        public void ToggleLog()
+        {
+            if (Step != FlashingStep.DisplayLogs)
+            {
+                _previousStep = Step;
+                Step = FlashingStep.DisplayLogs;
+            }
+            else
+            {
+                Step = _previousStep;
+            }
+        }
         public async Task Start()
         {
-                ConnectedDevices = new List<Device>();
-                FlashMessage = String.Empty;
-                FlashPercentage = 0;
-                SelectedDevice = null;
+            // The reset button was clicked
+            if (Step != FlashingStep.SearchKeyboard)
+            {
+                Logger.Log(LogSeverity.Info, $"Restarting the flash process.");
+            }
+            ConnectedDevices = new List<Device>();
+            FlashMessage = String.Empty;
+            FlashPercentage = 0;
+            SelectedDevice = null;
             Step = FlashingStep.SearchKeyboard;
             await Enumerate();
             // if there's only one device, skip the Keyboard selection step.
@@ -117,8 +149,11 @@ namespace Wally.Models
                 Step = FlashingStep.SelectFirmware;
             }
         }
-        public StateViewModel()
+        public StateViewModel(string appVersion)
         {
+            AppVersion = appVersion;
+            Logger = Logger.Instance();
+            Logger.Log(LogSeverity.Info, "Application started");
             Task.Run(async () =>
             {
                 await Start();
@@ -131,43 +166,88 @@ namespace Wally.Models
 
         public void SelectFirmare(string filePath)
         {
-            _firmware = new Firmware(filePath);
-            Step = FlashingStep.SearchBootloader;
-            Flash();
+            try
+            {
+                Logger.Log(LogSeverity.Info, $"Selected firmware, path: {filePath}");
+                _firmware = new Firmware(filePath);
+                Step = FlashingStep.SearchBootloader;
+                Logger.Log(LogSeverity.Info, $"Firmware file is valid for {_firmware.Target}.");
+                Flash();
+            }
+            catch (Exception e)
+            {
+                Logger.Log(LogSeverity.Error, e.Message);
+                Step = FlashingStep.Error;
+            }
         }
 
         private void Flash()
         {
+            Logger.Log(LogSeverity.Info, $"Starting flash process, targeting {Target} devices.");
             Task.Run(async () =>
             {
-                var enumerator = new Enumerator();
+                try
+                {
+                    var enumerator = new Enumerator();
 
-                while (enumerator.Devices.Count != 1)
-                {
-                    await Task.Delay(10);
-                    await enumerator.Run(_firmware.Target);
+                    while (enumerator.Devices.Count != 1)
+                    {
+                        await Task.Delay(10);
+                        await enumerator.Run(_firmware.Target);
+                    }
+                    Logger.Log(LogSeverity.Info, $"Target {Target} found, the keyboard is in reset mode.");
+                    var device = enumerator.Devices.First();
+                    Step = FlashingStep.Flash;
+                    await device.Init();
+                    await device.Flash(_firmware, (int percentage, string message) =>
+                    {
+                        FlashPercentage = percentage;
+                        FlashMessage = message;
+                        if (percentage == 0)
+                        {
+                            Logger.Log(LogSeverity.Info, $"Flashing: {message}.");
+                        }
+                        else
+                        {
+                            Logger.Log(LogSeverity.Info, $"Flashing: {percentage}% complete.");
+                        }
+                    });
+                    Step = FlashingStep.Complete;
                 }
-                var device = enumerator.Devices.First();
-                Step = FlashingStep.Flash;
-                await device.Init();
-                await device.Flash(_firmware, (int percentage, string message) =>
+                catch (Exception e)
                 {
-                    FlashPercentage = percentage;
-                    FlashMessage = message;
-                });
-                Step = FlashingStep.Complete;
+                    Logger.Log(LogSeverity.Error, e.Message);
+                    Step = FlashingStep.Error;
+                }
             });
         }
         private async Task Enumerate()
         {
-            var enumerator = new Enumerator();
-            while (enumerator.Devices.Count == 0)
+            try
             {
-                await enumerator.Run(Target);
-                await Task.Delay(10);
-            }
 
-            enumerator.Devices.ForEach(_dev => ConnectedDevices.Add(new Device((int)_dev.Info.ProductId, _dev.FriendlyName, _dev.Target)));
+                var enumerator = new Enumerator();
+                Logger.Log(LogSeverity.Info, $"Starting enumeration, targeting any compatible devices.");
+                while (enumerator.Devices.Count == 0)
+                {
+                    await enumerator.Run(Target);
+                    await Task.Delay(10);
+                }
+
+                Logger.Log(LogSeverity.Info, $"Enumeration complete for target, found {enumerator.Devices.Count} devices.");
+                var i = 1;
+                enumerator.Devices.ForEach(_dev =>
+                {
+                    ConnectedDevices.Add(new Device((int)_dev.Info.ProductId, _dev.FriendlyName, _dev.Target));
+                    Logger.Log(LogSeverity.Info, $"{i} - {_dev.FriendlyName} | {_dev.Info.DeviceId} | {_dev.Target}.");
+                    i++;
+                });
+            }
+            catch (Exception e)
+            {
+                Logger.Log(LogSeverity.Error, e.Message);
+                Step = FlashingStep.Error;
+            }
         }
     }
 }
