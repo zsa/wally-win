@@ -11,10 +11,10 @@
     <StackPanel Margin="15">
         <TextBlock Text="Wally" FontSize="20" FontWeight="Bold" />
         <TextBlock Opacity=".5" Margin="0,15">Version <TextBlock Text="{Binding AppVersion}"></TextBlock></TextBlock>
-        <TextBlock Margin="0,0,0,15">The official flashing tool for <Hyperlink>ZSA</Hyperlink> keyboards.</TextBlock>
-        <TextBlock>This software is licensed under the <Hyperlink>MIT Licence</Hyperlink>.</TextBlock>
-        <TextBlock Margin="0,0,0,15">Source code is available on <Hyperlink>Github</Hyperlink>.</TextBlock>
-        <TextBlock TextWrapping="Wrap" Margin="0,0,0,15">Visit <Hyperlink>zsa.io</Hyperlink> for more info, and email <Hyperlink>contact@zsa.io</Hyperlink> with any questions.</TextBlock>
+        <TextBlock Margin="0,0,0,15">The official flashing tool for <Hyperlink NavigateUri="https://zsa.io" RequestNavigate="Hyperlink_RequestNavigate">ZSA</Hyperlink> keyboards.</TextBlock>
+        <TextBlock>This software is licensed under the <Hyperlink NavigateUri="https://github.com/zsa/wally-win/blob/master/license.md" RequestNavigate="Hyperlink_RequestNavigate">MIT Licence</Hyperlink>.</TextBlock>
+        <TextBlock Margin="0,0,0,15">Source code is available on <Hyperlink NavigateUri="https://github.com/zsa/wally-win/" RequestNavigate="Hyperlink_RequestNavigate">Github</Hyperlink>.</TextBlock>
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,15">Visit <Hyperlink NavigateUri="https://zsa.io" RequestNavigate="Hyperlink_RequestNavigate">zsa.io</Hyperlink> for more info, and email <Hyperlink NavigateUri="mailto:contact@zsa.io" RequestNavigate="Hyperlink_RequestNavigate">contact@zsa.io</Hyperlink> with any questions.</TextBlock>
         <CheckBox VerticalContentAlignment="Center" IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=CheckForUpdates, Mode=TwoWay}">Automatically check for updates</CheckBox>
         <Button Grid.Column="1" Template="{DynamicResource HollowButton}" Style="{StaticResource Hollow}" HorizontalAlignment="Right" Margin="0,15,0,0" Click="Close_Click">Close</Button>
     </StackPanel>

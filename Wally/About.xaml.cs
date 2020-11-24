@@ -30,5 +30,12 @@ namespace Wally
             Properties.Settings.Default.Save();
             this.Close();
         }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Hyperlink link = (Hyperlink)sender;
+            var url = link.NavigateUri.ToString();
+            System.Diagnostics.Process.Start(url);
+        }
     }
 }
