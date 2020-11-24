@@ -17,14 +17,25 @@ using Wally.Models;
 namespace Wally.Pages
 {
     /// <summary>
-    /// Interaction logic for KeyboardSelect.xaml
+    /// Interaction logic for Complete.xaml
     /// </summary>
-    public partial class KeyboardSelect : Page
+    public partial class CompletePage : Page
     {
-        public KeyboardSelect()
+        public CompletePage()
         {
-            DataContext = App.Current.MainWindow.DataContext;
             InitializeComponent();
+        }
+
+        private void Restart_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var state = (StateViewModel)(App.Current.MainWindow.DataContext);
+            state.Start();
+        }
+
+        private void Close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+            return;
         }
     }
 }

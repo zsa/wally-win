@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Windows;
 using System.Globalization;
-using Wally.Models;
 using UtilsLibrary;
 using System.Windows.Media;
 

@@ -1,9 +1,8 @@
-﻿<Window x:Class="Wally.About"
+﻿<Window x:Class="Wally.AboutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wally"
         xmlns:properties="clr-namespace:Wally.Properties"
         mc:Ignorable="d"
         Title="About Wally" Height="310" Width="420" ResizeMode="NoResize" FontSize="14" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" WindowStyle="None">

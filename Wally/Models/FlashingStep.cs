@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Wally.Models
+﻿namespace Wally.Models
 {
     public enum FlashingStep
     {

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 using PropertyChanged;
 using System.ComponentModel;
 using UsbLibrary;
 using UtilsLibrary;
-using System.Windows.Input;
-using System.Windows;
 using System.Linq;
 
 namespace Wally.Models

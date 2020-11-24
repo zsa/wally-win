@@ -21,9 +21,9 @@ namespace Wally.Pages
     /// <summary>
     /// Interaction logic for FirmwareSelect.xaml
     /// </summary>
-    public partial class FirmwareSelect : Page
+    public partial class FirmwareSelectPage : Page
     {
-        public FirmwareSelect()
+        public FirmwareSelectPage()
         {
             DataContext = App.Current.MainWindow.DataContext;
             InitializeComponent();

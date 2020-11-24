@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Wally.Pages
 {
     /// <summary>
-    /// Interaction logic for Flashing.xaml
+    /// Interaction logic for BootloaderSearch.xaml
     /// </summary>
-    public partial class Flashing : Page
+    public partial class BootloaderSearchPage : Page
     {
-        public Flashing()
+        public BootloaderSearchPage()
         {
             DataContext = App.Current.MainWindow.DataContext;
             InitializeComponent();

@@ -78,7 +78,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Pages\Error.xaml.cs">
+    <Compile Update="Pages\ErrorPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
@@ -96,7 +96,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Pages\Error.xaml">
+    <Page Update="Pages\ErrorPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

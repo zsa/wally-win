@@ -16,13 +16,12 @@ using System.Windows.Shapes;
 namespace Wally.Pages
 {
     /// <summary>
-    /// Interaction logic for BootloaderSearch.xaml
+    /// Interaction logic for KeyboardSearchPage.xaml
     /// </summary>
-    public partial class BootloaderSearch : Page
+    public partial class KeyboardSearchPage : Page
     {
-        public BootloaderSearch()
+        public KeyboardSearchPage()
         {
-            DataContext = App.Current.MainWindow.DataContext;
             InitializeComponent();
         }
     }

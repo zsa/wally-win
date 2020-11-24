@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Markup;
 using Wally.Models;
 using Wally.Pages;
 
@@ -17,14 +11,14 @@ namespace Wally.Converters
         {
             return (FlashingStep)value switch
             {
-                FlashingStep.SearchKeyboard => new KeyboardSearch(),
-                FlashingStep.SelectKeyboard => new KeyboardSelect(),
-                FlashingStep.SelectFirmware => new FirmwareSelect(),
-                FlashingStep.SearchBootloader => new BootloaderSearch(),
-                FlashingStep.Flash => new Flashing(),
-                FlashingStep.Complete => new Complete(),
-                FlashingStep.Error => new Error(),
-                FlashingStep.DisplayLogs => new Logs(),
+                FlashingStep.SearchKeyboard => new KeyboardSearchPage(),
+                FlashingStep.SelectKeyboard => new KeyboardSelectPage(),
+                FlashingStep.SelectFirmware => new FirmwareSelectPage(),
+                FlashingStep.SearchBootloader => new BootloaderSearchPage(),
+                FlashingStep.Flash => new FlashingPage(),
+                FlashingStep.Complete => new CompletePage(),
+                FlashingStep.Error => new ErrorPage(),
+                FlashingStep.DisplayLogs => new LogsPage(),
                 _ => null
             };
         }

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using UtilsLibrary;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
 namespace Wally.Models
@@ -33,7 +29,7 @@ namespace Wally.Models
             var firstExecution = settings.FirstExecution;
             if (firstExecution == true)
             {
-                MessageBoxResult result = MessageBox.Show("Would you like to check for updates on startup?", "Wally updates", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Would you like Wally to check for updates on startup?", "Wally updates", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     settings.CheckForUpdates = true;

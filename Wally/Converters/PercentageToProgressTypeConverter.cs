@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Globalization;
 
 namespace Wally.Converters

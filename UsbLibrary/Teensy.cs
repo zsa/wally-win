@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UtilsLibrary;
-using Usb.Net;
 using System.Threading;
 
 namespace UsbLibrary

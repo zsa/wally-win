@@ -1,13 +1,10 @@
 ﻿using Device.Net;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using Usb.Net;
 using Usb.Net.Windows;
-using Hid.Net;
 using Hid.Net.Windows;
 using UtilsLibrary;
-using System.Linq;
 
 namespace UsbLibrary
 {
