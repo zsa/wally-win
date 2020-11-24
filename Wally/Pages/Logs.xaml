@@ -1,0 +1,30 @@
+﻿<Page x:Class="Wally.Pages.Logs"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Wally.Pages" xmlns:models="clr-namespace:Wally.Models" xmlns:converters="clr-namespace:Wally.Converters" d:DataContext="{d:DesignInstance Type=models:StateViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="580"
+      Margin="-30 -30 -30 -60"
+      Title="Displaying Wally's logs" Background="#DD18262F" Foreground="#FFA6AFB8">
+
+    <Page.Resources>
+        <DataTemplate x:Key="LogEntry">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Margin="0,0,0,5" Text="{Binding Time}" Foreground="#FFA363D5" TextWrapping="Wrap"/>
+                <TextBlock Grid.Column="1" Margin="0,0,0,5" Text="{Binding Severity}" HorizontalAlignment="Center" Foreground="{Binding Severity, Converter={converters:LogSeverityToColorConverter}}" TextWrapping="Wrap"/>
+                <TextBlock Grid.Column="2" Margin="0,0,0,5" Text="{Binding Message}" Foreground="#FFA6AFB8" TextWrapping="Wrap"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ItemsControl Padding="15" FontFamily="Consolas" ItemsSource="{Binding Logger.Logs}" Background="{x:Null}" BorderBrush="{x:Null}" ItemTemplate="{StaticResource LogEntry}"></ItemsControl>
+    </ScrollViewer>
+</Page>

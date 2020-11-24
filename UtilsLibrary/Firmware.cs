@@ -25,39 +25,44 @@ namespace UtilsLibrary
         {
             if (Encoding.UTF8.GetString(Bytes, Bytes.Length - 8, 3) != "UFD")
             {
-                throw new FormatException("DFU File is missing a prefix");
+                throw new FormatException("DFU File is missing a prefix.");
             }
         }
         private void OpenFile()
         {
-            try
+            if (Target == Target.unknown)
             {
-                // TODO Add CRC Check
+                throw new FormatException("The firmware file format is not supported.");
+            }
+            else
+            {
                 if (Target == Target.stm32)
                 {
-                Bytes = File.ReadAllBytes(FilePath);
+                    Bytes = File.ReadAllBytes(FilePath);
                     ProcessDFUFile();
                     Opened = true;
                 }
 
                 if (Target == Target.teensy)
                 {
-                    HexFileReader reader = new HexFileReader(FilePath, ErgodoxMemSize);
-                    MemoryBlock memory = reader.Parse();
-
-                    Bytes = new byte[ErgodoxMemSize];
-                    var i = 0;
-                    foreach(MemoryCell cell in memory.Cells)
+                    try
                     {
-                        Bytes[i] = cell.Value;
-                        i++;
+                        HexFileReader reader = new HexFileReader(FilePath, ErgodoxMemSize);
+                        MemoryBlock memory = reader.Parse();
+                        Bytes = new byte[ErgodoxMemSize];
+                        var i = 0;
+                        foreach (MemoryCell cell in memory.Cells)
+                        {
+                            Bytes[i] = cell.Value;
+                            i++;
+                        }
+                        Opened = true;
                     }
-                    Opened = true;
+                    catch (Exception e)
+                    {
+                        throw new FormatException("The firmware file is corrupted.", e);
+                    }
                 }
-            }
-            catch (Exception exception)
-            {
-                throw new FormatException("Error while opening firmware file", exception);
             }
         }
 
