@@ -15,10 +15,10 @@ namespace Wally.Pages
             InitializeComponent();
         }
 
-        private void Restart_Button_Click(object sender, RoutedEventArgs e)
+        private void Copy_Log_Button_Click(object sender, RoutedEventArgs e)
         {
             var state = (StateViewModel)(this.DataContext);
-            state.Start();
+            state.CopyToClipboard();
         }
     }
 }

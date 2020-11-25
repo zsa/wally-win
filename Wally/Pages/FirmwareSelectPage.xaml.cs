@@ -44,5 +44,28 @@ namespace Wally.Pages
                 if (fileName != String.Empty) state.SelectFirmare(fileName);
             }
         }
+
+        private void Page_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                // If multiple files are dropped we keep the first one and ignore the rest.
+                var firstFile = files[0];
+                var state = (StateViewModel)(this.DataContext);
+                state.SelectFirmare(firstFile);
+            }
+            this.DropTarget.Background = new SolidColorBrush(Colors.Transparent);
+        }
+
+        private void Page_DragEnter(object sender, DragEventArgs e)
+        {
+            this.DropTarget.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#20000000"));
+        }
+
+        private void Page_DragLeave(object sender, DragEventArgs e)
+        {
+            this.DropTarget.Background = new SolidColorBrush(Colors.Transparent);
+        }
     }
 }

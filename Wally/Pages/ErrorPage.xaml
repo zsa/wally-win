@@ -2,8 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Wally.Pages"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:converters="clr-namespace:Wally.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="580"
       Title="Flashing complete">
@@ -18,7 +17,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Template="{DynamicResource HollowButton}" Style="{StaticResource Hollow}" Click="Restart_Button_Click" HorizontalAlignment="Center" Margin="5,0">Copy the logs</Button>
+            <Button Grid.Column="1" Template="{DynamicResource HollowButton}" Style="{StaticResource Hollow}" Click="Copy_Log_Button_Click" HorizontalAlignment="Center" Margin="5,0" Content="{Binding CopiedToClipboard, Converter={converters:LogsCopiedLabelConverter}}"/>
         </Grid>
     </StackPanel>
 </Page>

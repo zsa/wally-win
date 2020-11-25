@@ -14,182 +14,7 @@ namespace Wally.Models
     {
 
         private Firmware _firmware;
-
-        public Logger Logger { get; set; }
-
-        public string AppVersion { get; set; }
-        public string StatusBarVersion {
-            get
-            {
-                return $"v{AppVersion}";
-            }
-        }
-
-        public FlashingStep Step { get; set; }
-
-        public IList<Device> ConnectedDevices { get; set; }
-
-        public int FlashPercentage { get; set; }
-        public string FlashMessage { get; set; }
-
-        public Device SelectedDevice
-        {
-            get
-            {
-                return _selectedDevice;
-            }
-            set
-            {
-                _selectedDevice = value;
-                if (value != null)
-                {
-                    Step = FlashingStep.SelectFirmware;
-                    Logger.Log(LogSeverity.Info, $"Device selected as a flashing target: {value.FriendlyName} | {value.Target}");
-                }
-            }
-        }
-
-        public Target Target
-        {
-            get
-            {
-                if (SelectedDevice == null) return Target.all;
-                return SelectedDevice.Target;
-            }
-        }
-
-        public string FileExtension
-        {
-            get
-            {
-                if (Target == Target.stm32) return ".bin";
-                if (Target == Target.teensy) return ".hex";
-                return String.Empty;
-            }
-
-        }
-
         private Device _selectedDevice;
-
-        public string StatusLabel
-        {
-            get
-            {
-                if (Step == FlashingStep.SearchKeyboard)
-                {
-                    return "LOOKING...";
-                }
-                if (Step == FlashingStep.SelectKeyboard)
-                {
-                    return "-SELECT-";
-                }
-                if (SelectedDevice != null)
-                {
-                    return SelectedDevice.FriendlyName;
-                }
-                return String.Empty;
-            }
-        }
-        public int ActivePillIndex
-        {
-            get
-            {
-                return Step switch
-                {
-                    FlashingStep.SearchKeyboard or FlashingStep.SelectKeyboard => 0,
-                    FlashingStep.SelectFirmware or FlashingStep.SearchBootloader => 1,
-                    FlashingStep.Flash => 2,
-                    FlashingStep.Complete => 3,
-                    FlashingStep.Error => 3,
-                    _ => 3
-                };
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private FlashingStep _previousStep;
-        public void ToggleLog()
-        {
-            if (Step != FlashingStep.DisplayLogs)
-            {
-                _previousStep = Step;
-                Step = FlashingStep.DisplayLogs;
-            }
-            else
-            {
-                Step = _previousStep;
-            }
-        }
-        public async Task Start()
-        {
-            // The reset button was clicked
-            if (Step != FlashingStep.SearchKeyboard)
-            {
-                Logger.Log(LogSeverity.Info, $"Restarting the flash process.");
-            }
-            ConnectedDevices = new List<Device>();
-            FlashMessage = String.Empty;
-            FlashPercentage = 0;
-            SelectedDevice = null;
-            Step = FlashingStep.SearchKeyboard;
-            await Enumerate();
-            // if there's only one device, skip the Keyboard selection step.
-            if (ConnectedDevices.Count > 1)
-            {
-                Step = FlashingStep.SelectKeyboard;
-            }
-            else
-            {
-                SelectedDevice = ConnectedDevices[0];
-                Step = FlashingStep.SelectFirmware;
-            }
-        }
-        public StateViewModel(string appVersion, string filePath)
-        {
-            AppVersion = appVersion;
-            Logger = Logger.Instance();
-            Logger.Log(LogSeverity.Info, "Application started");
-            if(filePath == String.Empty)
-            {
-                Task.Run(async () =>
-                {
-                    await Start();
-                });
-            }
-            else
-            {
-                SelectFirmare(filePath);
-            }
-        }
-        public void SelectKeyboard()
-        {
-            Step = FlashingStep.SelectFirmware;
-        }
-
-        public void SelectFirmare(string filePath)
-        {
-            try
-            {
-                Logger.Log(LogSeverity.Info, $"Selected firmware, path: {filePath}");
-                _firmware = new Firmware(filePath);
-                // If the file was provided as an argument, the keyboard step was skipped, as
-                // a result we need to create one that has the same target as the firmware file
-                if(SelectedDevice == null)
-                {
-                    SelectedDevice = new Device(0xDF11, "Keyboard in reset mode", _firmware.Target);
-                }
-                Step = FlashingStep.SearchBootloader;
-                Logger.Log(LogSeverity.Info, $"Firmware file is valid for {_firmware.Target}.");
-                Flash();
-            }
-            catch (Exception e)
-            {
-                Logger.Log(LogSeverity.Error, e.Message);
-                Step = FlashingStep.Error;
-            }
-        }
-
         private void Flash()
         {
             Logger.Log(LogSeverity.Info, $"Starting flash process, targeting {Target} devices.");
@@ -258,5 +83,203 @@ namespace Wally.Models
                 Step = FlashingStep.Error;
             }
         }
+        private FlashingStep _previousStep;
+
+        public Logger Logger { get; set; }
+
+        public string AppVersion { get; set; }
+        public string StatusBarVersion
+        {
+            get
+            {
+                return $"v{AppVersion}";
+            }
+        }
+
+        public bool CopiedToClipboard { get; set; } = false;
+        public FlashingStep Step { get; set; }
+
+        public IList<Device> ConnectedDevices { get; set; }
+
+        public int FlashPercentage { get; set; }
+        public string FlashMessage { get; set; }
+
+        public void CopyToClipboard()
+        {
+            LogsToClipboard.Run();
+            CopiedToClipboard = true;
+            Task.Run(async () =>
+           {
+               await Task.Delay(3000);
+               CopiedToClipboard = false;
+           });
+        }
+        public Device SelectedDevice
+        {
+            get
+            {
+                return _selectedDevice;
+            }
+            set
+            {
+                _selectedDevice = value;
+                if (value != null)
+                {
+                    Step = FlashingStep.SelectFirmware;
+                    Logger.Log(LogSeverity.Info, $"Device selected as a flashing target: {value.FriendlyName} | {value.Target}");
+                }
+            }
+        }
+
+        public Target Target
+        {
+            get
+            {
+                if (SelectedDevice == null) return Target.all;
+                return SelectedDevice.Target;
+            }
+        }
+
+        public string FileExtension
+        {
+            get
+            {
+                if (Target == Target.stm32) return ".bin";
+                if (Target == Target.teensy) return ".hex";
+                return String.Empty;
+            }
+
+        }
+
+
+        public string StatusLabel
+        {
+            get
+            {
+                if (Step == FlashingStep.SearchKeyboard)
+                {
+                    return "LOOKING...";
+                }
+                if (Step == FlashingStep.SelectKeyboard)
+                {
+                    return "-SELECT-";
+                }
+                if (SelectedDevice != null)
+                {
+                    return SelectedDevice.FriendlyName;
+                }
+                return String.Empty;
+            }
+        }
+        public int ActivePillIndex
+        {
+            get
+            {
+                return Step switch
+                {
+                    FlashingStep.SearchKeyboard or FlashingStep.SelectKeyboard => 0,
+                    FlashingStep.SelectFirmware or FlashingStep.SearchBootloader => 1,
+                    FlashingStep.Flash => 2,
+                    FlashingStep.Complete => 3,
+                    FlashingStep.Error => 3,
+                    _ => 3
+                };
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void ToggleLog()
+        {
+            if (Step != FlashingStep.DisplayLogs)
+            {
+                _previousStep = Step;
+                Step = FlashingStep.DisplayLogs;
+            }
+            else
+            {
+                Step = _previousStep;
+            }
+        }
+        public async Task Start()
+        {
+            // The reset button was clicked
+            if (Step != FlashingStep.SearchKeyboard)
+            {
+                Logger.Log(LogSeverity.Info, $"Restarting the flash process.");
+            }
+            ConnectedDevices = new List<Device>();
+            FlashMessage = String.Empty;
+            FlashPercentage = 0;
+            SelectedDevice = null;
+            Step = FlashingStep.SearchKeyboard;
+            await Enumerate();
+            // if there's only one device, skip the Keyboard selection step.
+            if (ConnectedDevices.Count > 1)
+            {
+                Step = FlashingStep.SelectKeyboard;
+            }
+            else
+            {
+                SelectedDevice = ConnectedDevices[0];
+                Step = FlashingStep.SelectFirmware;
+            }
+        }
+        public StateViewModel(string appVersion, string filePath)
+        {
+            AppVersion = appVersion;
+            Logger = Logger.Instance();
+            Logger.Log(LogSeverity.Info, "Application started");
+            if (filePath == String.Empty)
+            {
+                Task.Run(async () =>
+                {
+                    await Start();
+                });
+            }
+            else
+            {
+                SelectFirmare(filePath);
+            }
+        }
+        public void SelectKeyboard()
+        {
+            Step = FlashingStep.SelectFirmware;
+        }
+
+        public void SelectFirmare(string filePath)
+        {
+            try
+            {
+                Logger.Log(LogSeverity.Info, $"Selected firmware, path: {filePath}");
+                _firmware = new Firmware(filePath);
+
+                // If the file was provided as an argument, the keyboard step was skipped, as
+                // a result we need to create one that has the same target as the firmware file
+                if (SelectedDevice == null)
+                {
+                    SelectedDevice = new Device(0xDF11, "Keyboard in reset mode", _firmware.Target);
+                }
+
+                // A firmware could mismatch the target device
+                if (SelectedDevice.Target != _firmware.Target)
+                {
+                    Logger.Log(LogSeverity.Error, "The firmware you supplied is not compatible with the keyboard you selected.");
+                    Step = FlashingStep.Error;
+                }
+                else
+                {
+                    Step = FlashingStep.SearchBootloader;
+                    Logger.Log(LogSeverity.Info, $"Firmware file is valid for {_firmware.Target}.");
+                    Flash();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log(LogSeverity.Error, e.Message);
+                Step = FlashingStep.Error;
+            }
+        }
+
     }
 }

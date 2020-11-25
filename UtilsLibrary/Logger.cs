@@ -26,7 +26,7 @@ namespace UtilsLibrary
 
         public void Log(LogSeverity severity, string message)
         {
-            Logs.Add(new Log(severity, message));
+            Logs.Insert(0, new Log(severity, message));
             if (severity == LogSeverity.Error) LastError = message;
         }
     }

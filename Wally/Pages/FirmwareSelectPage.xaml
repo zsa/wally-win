@@ -3,15 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Wally.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="580"
       Title="SelectFirmware">
-
-    <StackPanel VerticalAlignment="Center">
-        <Image Source="/Resources/file.png" Height="96" Width="100" />
-        <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5">Select firmware</TextBlock>
-        <TextBlock HorizontalAlignment="Center" FontSize="14">Select a <TextBlock Text="{Binding FileExtension}"  FontWeight="Bold"/> file compatible with your keyboard.</TextBlock>
-        <Button Template="{DynamicResource HollowButton}" Style="{StaticResource Hollow}" Click="FileSelect_Click" HorizontalAlignment="Center" Margin="0,10">Select file</Button>
-    </StackPanel>
+    <Border x:Name="DropTarget" AllowDrop="True" Drop="Page_Drop" DragEnter="Page_DragEnter" DragLeave="Page_DragLeave" CornerRadius="5" Background="Transparent">
+        <StackPanel VerticalAlignment="Center">
+            <Image Source="/Resources/file.png" Height="96" Width="100" />
+            <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5">Select firmware</TextBlock>
+            <TextBlock HorizontalAlignment="Center" FontSize="14">Select or drop a <TextBlock Text="{Binding FileExtension}"  FontWeight="Bold"/> file compatible with your keyboard.</TextBlock>
+            <Button Template="{DynamicResource HollowButton}" Style="{StaticResource Hollow}" Click="FileSelect_Click" HorizontalAlignment="Center" Margin="0,10">Select file</Button>
+        </StackPanel>
+    </Border>
 </Page>
