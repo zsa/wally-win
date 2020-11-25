@@ -36,30 +36,22 @@
             <Ellipse Grid.Column="3" Width="8" Height="8" Fill="#33000000" />
             <Ellipse Grid.Column="{Binding ActivePillIndex}" Width="10" Height="10" Fill="#FFFFFF" />
         </Grid>
-        <Grid Grid.Row="2" Margin="0,0,0,0" Background="#FF393838" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource LightGreyText}" Text="KEYBOARD:" Margin="5,0" />
-            <TextBlock VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource WhiteText}" Text="{Binding StatusLabel}"></TextBlock>
-            <TextBlock VerticalAlignment="Center" Grid.Column="3" Foreground="#FFFFFFFF" MouseLeftButtonUp="Reset_Click" Visibility="{Binding Step, Converter={converters:ResetButtonVisibilityConverter}}">
-                <TextBlock.TextDecorations>
-                    <TextDecoration/>
-                </TextBlock.TextDecorations>Reset</TextBlock>
-            <TextBlock VerticalAlignment="Center" Grid.Column="4" Foreground="#FFFFFFFF" MouseLeftButtonUp="Logs_Click" Margin="10,0,0,0">
-                <TextBlock.TextDecorations>
-                    <TextDecoration/>
-                </TextBlock.TextDecorations>Logs</TextBlock>
-            <TextBlock VerticalAlignment="Center" Grid.Column="5" Foreground="#FFFFD667" Style="{StaticResource YellowText}" Margin="10,0,5,0" Text="{Binding StatusBarVersion}" MouseLeftButtonUp="Version_MouseLeftButtonUp">
-                <TextBlock.TextDecorations>
-                    <TextDecoration/>
-                </TextBlock.TextDecorations>
-            </TextBlock>
-        </Grid>
+        <StackPanel Grid.Row="2" Background="#FF393838">
+            <Grid Margin="0,4,0,0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource LightGreyText}" Text="KEYBOARD:" Margin="5,0" />
+                <TextBlock VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource WhiteText}" Text="{Binding StatusLabel}"></TextBlock>
+                <Button VerticalAlignment="Center" Grid.Column="3"  Style="{StaticResource HyperLinkButton}" Foreground="#FFFFFFFF" Click="Reset_Click" Visibility="{Binding Step, Converter={converters:ResetButtonVisibilityConverter}}">Reset</Button>
+                <Button VerticalAlignment="Center" Grid.Column="4" Style="{StaticResource HyperLinkButton}" Foreground="#FFFFFFFF" Click="Logs_Click" Margin="10,0,0,0">Logs</Button>
+                <Button VerticalAlignment="Center" Grid.Column="5" Style="{StaticResource HyperLinkButton}" Foreground="#FFFFD667" Margin="10,0,5,0" Content="{Binding StatusBarVersion}" Click="Version_Click" />
+            </Grid>
+        </StackPanel>
     </Grid>
 </Window>

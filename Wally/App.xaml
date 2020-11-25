@@ -15,6 +15,20 @@
         <Style TargetType="TextBlock" x:Key="YellowText">
             <Setter Property="Foreground" Value="#FFFFD667"></Setter>
         </Style>
+        <Style x:Key="HyperLinkButton" TargetType="Button">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock>
+                            <Hyperlink Foreground="{TemplateBinding Foreground}">
+                                <Run Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
+                            </Hyperlink>
+                        </TextBlock>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <ControlTemplate x:Key="HollowButton" TargetType="{x:Type ButtonBase}">
             <Border x:Name="border" Background="{x:Null}" BorderThickness="2" BorderBrush="#FF4B3C3A" SnapsToDevicePixels="true" CornerRadius="2">
                 <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="10,5" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>

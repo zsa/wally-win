@@ -47,7 +47,7 @@ namespace Wally
             state.ToggleLog();
         }
 
-        private void Version_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Version_Click(object sender, RoutedEventArgs e)
         {
             AboutWindow dlg = new AboutWindow();
 
@@ -61,5 +61,6 @@ namespace Wally
             dlg.Owner = this;
             dlg.ShowDialog();
         }
+
     }
 }

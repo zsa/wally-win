@@ -24,7 +24,10 @@
         </DataTemplate>
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <ItemsControl Padding="15" FontFamily="Consolas" ItemsSource="{Binding Logger.Logs}" Background="{x:Null}" BorderBrush="{x:Null}" ItemTemplate="{StaticResource LogEntry}"></ItemsControl>
-    </ScrollViewer>
+    <StackPanel>
+        <Button Grid.Column="1" Style="{StaticResource HyperLinkButton}" Click="Copy_Log_Button_Click" Foreground="#FFFFFFFF" HorizontalAlignment="Right" Margin="10,5" Content="{Binding CopiedToClipboard, Converter={converters:LogsCopiedLabelConverter}}" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,-10,0,0">
+            <ItemsControl Padding="15" FontFamily="Consolas" ItemsSource="{Binding Logger.Logs}" Background="{x:Null}" BorderBrush="{x:Null}" ItemTemplate="{StaticResource LogEntry}"></ItemsControl>
+        </ScrollViewer>
+    </StackPanel>
 </Page>

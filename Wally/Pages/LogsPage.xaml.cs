@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Wally.Models;
 
 namespace Wally.Pages
 {
@@ -11,6 +13,11 @@ namespace Wally.Pages
         {
             DataContext = App.Current.MainWindow.DataContext;
             InitializeComponent();
+        }
+        private void Copy_Log_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var state = (StateViewModel)(this.DataContext);
+            state.CopyToClipboard();
         }
     }
 }
