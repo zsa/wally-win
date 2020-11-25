@@ -1,13 +1,16 @@
 # Wally
 
 Flash your [ZSA Keyboard](https://ergodox-ez.com) the EZ way.
+
 This repository hosts the code and releases for Windows users. It replaces the original
 [Wally repo](https://gihub.com/zsa/wally).
 
 ## Getting started.
 Head to the [release page](https://github.com/zsa/wally-win/releases) to download the latest installer. Note you will need administrator privileges to install Wally.
 
-� When running the installer, make sure the User Account Control popup includes the following line: **Verified publisher: ZSA Technology Labs Inc.**
+⚠️ When running the installer, make sure the User Account Control popup includes the following line:
+
+**Verified publisher: ZSA Technology Labs Inc.**
 
 ## Contributing
 If you wish to add a distribution channel for Wally, please create a pull request including documentation and the files / scripts required.
