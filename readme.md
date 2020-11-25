@@ -1,6 +1,6 @@
 # Wally
 
-Flash your [ZSA Keyboard](https://ergodox-ez.com) the EZ way.
+Flash your [ZSA Keyboard](https://zsa.io) the EZ way.
 
 This repository hosts the code and releases for Windows users. It replaces the original
 [Wally repo](https://gihub.com/zsa/wally).
