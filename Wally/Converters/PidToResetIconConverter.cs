@@ -4,8 +4,12 @@ using System.Windows.Media.Imaging;
 
 namespace Wally.Converters
 {
+    /// <summary>
+    /// This converter returns the Keyboard reset icon seen in the <see cref="BootloaderSearchPage"/> based on the Product Id passed.
+    /// </summary>
     class PidToResetIconConverter : BaseValueConverter<PidToResetIconConverter>
     {
+        #region public members
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var image = (int)value switch
@@ -29,5 +33,6 @@ namespace Wally.Converters
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

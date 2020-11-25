@@ -5,8 +5,13 @@ using Wally.Models;
 
 namespace Wally.Converters
 {
+    /// <summary>
+    /// This Converter returns the visibility of the four progress pills seen at the bottom
+    /// of the app to hide them when displaying the logs.
+    /// </summary>
     public class StepPillsVisibilityConverter : BaseValueConverter<StepPillsVisibilityConverter>
     {
+        #region public members
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var step = (FlashingStep)value;
@@ -18,5 +23,6 @@ namespace Wally.Converters
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

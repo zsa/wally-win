@@ -5,8 +5,13 @@ using Wally.Models;
 
 namespace Wally.Converters
 {
+    /// <summary>
+    /// This converter returns the visibility status of the reset button seen on Wally's
+    /// footer section, based on the current <see cref="FlashingStep"/>
+    /// </summary>
     public class ResetButtonVisibilityConverter : BaseValueConverter<ResetButtonVisibilityConverter>
     {
+        #region public members
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var step = (FlashingStep)value;
@@ -19,5 +24,6 @@ namespace Wally.Converters
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

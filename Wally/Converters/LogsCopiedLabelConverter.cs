@@ -3,8 +3,13 @@ using System.Globalization;
 
 namespace Wally.Converters
 {
+    /// <summary>
+    /// This converter returns the "copy logs" buttons labels depending
+    /// on <see cref="StateViewModel"/> <see cref="CopiedToClipboard"/> boolean
+    /// </summary>
     public class LogsCopiedLabelConverter : BaseValueConverter<LogsCopiedLabelConverter>
     {
+        #region public members
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var copied = (bool)value;
@@ -15,5 +20,6 @@ namespace Wally.Converters
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
