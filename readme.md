@@ -3,7 +3,7 @@
 Flash your [ZSA Keyboard](https://zsa.io) the EZ way.
 
 This repository hosts the code and releases for Windows users. It replaces the original
-[Wally repo](https://gihub.com/zsa/wally).
+[Wally repo](https://github.com/zsa/wally).
 
 ## Getting started.
 Head to the [release page](https://github.com/zsa/wally-win/releases) to download the latest installer. Note you will need administrator privileges to install Wally.
