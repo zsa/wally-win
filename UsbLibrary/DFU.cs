@@ -54,7 +54,7 @@ namespace UsbLibrary
                 request: DFU_REQ_CLEARSTATUS
             );
 
-            await this.device.Handle.SendControlTransferAsync(setupPacket, null);
+            await this.device.Handle.PerformControlTransferAsync(setupPacket, null);
         }
         private async Task GetStatus()
         {
@@ -69,7 +69,7 @@ namespace UsbLibrary
                 length: 6
             );
 
-            var res = await this.device.Handle.SendControlTransferAsync(setupPacket, buffer);
+            var res = await this.device.Handle.PerformControlTransferAsync(setupPacket, buffer);
 
             if (res.BytesTransferred != buffer.Length)
             {
@@ -183,7 +183,7 @@ namespace UsbLibrary
                 value: (ushort)blockNumber
             );
 
-            var res = await this.device.Handle.SendControlTransferAsync(setupPacket, block);
+            var res = await this.device.Handle.PerformControlTransferAsync(setupPacket, block);
 
             if (res.BytesTransferred != block.Length)
             {
@@ -211,7 +211,7 @@ namespace UsbLibrary
                 length: (ushort)buffer.Length
             );
 
-            var res = await this.device.Handle.SendControlTransferAsync(setupPacket, buffer);
+            var res = await this.device.Handle.PerformControlTransferAsync(setupPacket, buffer);
 
             if (res.BytesTransferred != buffer.Length)
             {
@@ -229,7 +229,7 @@ namespace UsbLibrary
                 request: DFU_REQ_DOWNLOAD
             );
 
-            await this.device.Handle.SendControlTransferAsync(setupPacket, null);
+            await this.device.Handle.PerformControlTransferAsync(setupPacket, null);
         }
         public async Task Run(ProgressCallback progressCallback)
         {
