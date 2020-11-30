@@ -1,6 +1,10 @@
 ﻿using System.Threading.Tasks;
 using UtilsLibrary;
 using System.Threading;
+using Polly;
+using System;
+using Device.Net.Exceptions;
+using System.IO;
 
 namespace UsbLibrary
 {
@@ -23,6 +27,17 @@ namespace UsbLibrary
 
         public delegate void ProgressCallback(int percentage, string message);
 
+        private async Task WriteReportWithRetries(byte[] block, byte reportId)
+        {
+            var retryPolicy = Policy.Handle<ValidationException>()
+                                    .Or<NotInitializedException>()
+                                    .Or<IOException>()
+                                    .WaitAndRetryAsync(
+                                        5,
+                                        i => TimeSpan.FromMilliseconds(i * 500)
+                                    );
+            await retryPolicy.ExecuteAsync(async () => await device.HidHandle.WriteReportAsync(block, reportId));
+        }
         private async Task WriteFlash(ProgressCallback progressCallback)
         {
             for(long addr = 0; addr < ErgodoxMemSize; addr += ErgodoxBlockSize)
@@ -31,7 +46,7 @@ namespace UsbLibrary
                 block[0] = (byte)(addr & 0XFF);
                 block[1] = (byte)((addr >> 8) & 0XFF);
                 System.Array.Copy(firmware.Bytes, addr, block, 2, ErgodoxBlockSize);
-                await device.HidHandle.WriteReportAsync(block, HidReportId);
+                await WriteReportWithRetries(block, HidReportId);
                 if(addr == 0)
                 {
                     progressCallback(0, "Erasing flash");
@@ -52,8 +67,7 @@ namespace UsbLibrary
             buffer[0] = 0xFF;
             buffer[1] = 0xFF;
             Thread.Sleep(1000);
-            await device.HidHandle.WriteReportAsync(buffer, HidReportId);
-
+            await WriteReportWithRetries(buffer, HidReportId);
         }
         public async Task Run(ProgressCallback progressCallback)
         {

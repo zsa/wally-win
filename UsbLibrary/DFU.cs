@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using UtilsLibrary;
 using Usb.Net;
 using System.Threading;
+using Polly;
+using Device.Net.Exceptions;
+using Device.Net;
 
 namespace UsbLibrary
 {
@@ -44,6 +47,16 @@ namespace UsbLibrary
             firmware = _firmware;
             dfuStatus = new DFUStatus();
         }
+        private async Task<TransferResult> performControlTransferWithRetries(SetupPacket setupPacket, byte[] buffer)
+        {
+            var retryPolicy = Policy.Handle<ApiException>()
+                                    .Or<ControlTransferException>()
+                                    .WaitAndRetryAsync(
+                                        5,
+                                        i => TimeSpan.FromMilliseconds(i * 100)
+                                    );
+            return await retryPolicy.ExecuteAsync(async () => await device.Handle.PerformControlTransferAsync(setupPacket, buffer));
+        }
         private async Task ClearStatus()
         {
             var setupPacket = new SetupPacket(
@@ -54,7 +67,7 @@ namespace UsbLibrary
                 request: DFU_REQ_CLEARSTATUS
             );
 
-            await this.device.Handle.PerformControlTransferAsync(setupPacket, null);
+            await performControlTransferWithRetries(setupPacket, null);
         }
         private async Task GetStatus()
         {
@@ -69,7 +82,7 @@ namespace UsbLibrary
                 length: 6
             );
 
-            var res = await this.device.Handle.PerformControlTransferAsync(setupPacket, buffer);
+            var res = await performControlTransferWithRetries(setupPacket, buffer);
 
             if (res.BytesTransferred != buffer.Length)
             {
@@ -183,7 +196,7 @@ namespace UsbLibrary
                 value: (ushort)blockNumber
             );
 
-            var res = await this.device.Handle.PerformControlTransferAsync(setupPacket, block);
+            var res = await performControlTransferWithRetries(setupPacket, block);
 
             if (res.BytesTransferred != block.Length)
             {
@@ -211,7 +224,7 @@ namespace UsbLibrary
                 length: (ushort)buffer.Length
             );
 
-            var res = await this.device.Handle.PerformControlTransferAsync(setupPacket, buffer);
+            var res = await performControlTransferWithRetries(setupPacket, buffer);
 
             if (res.BytesTransferred != buffer.Length)
             {
@@ -229,7 +242,7 @@ namespace UsbLibrary
                 request: DFU_REQ_DOWNLOAD
             );
 
-            await this.device.Handle.PerformControlTransferAsync(setupPacket, null);
+            await performControlTransferWithRetries(setupPacket, null);
         }
         public async Task Run(ProgressCallback progressCallback)
         {

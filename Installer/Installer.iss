@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wally"
-#define MyAppVersion "2.9.0"
+#define MyAppVersion "3.0.1"
 #define MyAppPublisher "ZSA Technology Labs"
 #define MyAppURL "https://www.zsa.io"
 #define MyAppExeName "Wally.exe"

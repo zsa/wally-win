@@ -5,6 +5,7 @@ using Usb.Net;
 using Usb.Net.Windows;
 using Hid.Net.Windows;
 using UtilsLibrary;
+using Polly;
 
 namespace UsbLibrary
 {
@@ -71,6 +72,26 @@ namespace UsbLibrary
             Info = deviceDefinition;
         }
         #endregion
+        #region Private methods
+        private async Task UsbInitWithRetries()
+        {
+            var retryPolicy = Policy.Handle<Exception>()
+                                    .WaitAndRetryAsync(
+                                        5,
+                                        i => TimeSpan.FromMilliseconds(i * 500)
+                                    );
+            await retryPolicy.ExecuteAsync(async () => await Handle.InitializeAsync());
+        }
+        private async Task HidInitWithRetries()
+        {
+            var retryPolicy = Policy.Handle<Exception>()
+                                    .WaitAndRetryAsync(
+                                        5,
+                                        i => TimeSpan.FromMilliseconds(i * 500)
+                                    );
+            await retryPolicy.ExecuteAsync(async () => await HidHandle.InitializeAsync());
+        }
+        #endregion
         #region Public methods
         /// <summary>
         /// Inits and connect to a usb device
@@ -81,12 +102,12 @@ namespace UsbLibrary
             if(Info.DeviceType == DeviceType.Hid)
             {
                 HidHandle = new WindowsHidDevice(Info.DeviceId, 131, 131);
-                await HidHandle.InitializeAsync();
+                await HidInitWithRetries();
             }
             else
             {
                 Handle = new UsbDevice(Info.DeviceId, new WindowsUsbInterfaceManager(Info.DeviceId));
-                await Handle.InitializeAsync();
+                await UsbInitWithRetries();
             }
         }
         /// <summary>

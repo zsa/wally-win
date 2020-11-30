@@ -6,7 +6,7 @@
     <RootNamespace>wally_cli</RootNamespace>
     <ApplicationIcon>Wally.ico</ApplicationIcon>
 	  <LangVersion>9.0</LangVersion>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <Authors>Florian Didron</Authors>
     <Company>ZSA Technology Labs, Inc</Company>
     <PackageLicenseFile>license.md</PackageLicenseFile>
