@@ -6,7 +6,7 @@
 	<LangVersion>9.0</LangVersion> 
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Wally.ico</ApplicationIcon>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Authors>Florian Didron</Authors>
     <Company>ZSA Technology Labs, Inc</Company>
     <PackageProjectUrl>https://www.zsa.io/wally/</PackageProjectUrl>

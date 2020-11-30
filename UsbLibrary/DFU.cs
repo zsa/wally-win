@@ -248,6 +248,8 @@ namespace UsbLibrary
         {
             device.TotalBytes = firmware.Bytes.Length - DFU_SUFFIX_LENGTH;
 
+            await WaitForDevice();
+
             progressCallback(0, "Erasing flash");
             await EraseFlash();
 

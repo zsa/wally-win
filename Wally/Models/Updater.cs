@@ -60,7 +60,7 @@ namespace Wally.Models
                 HttpResponseMessage res = await fetch.GetAsync("wally-win.json");
                 var data = await res.Content.ReadAsStringAsync();
                 var update = JsonConvert.DeserializeObject<UpdateViewModel>(data);
-                if(_currentVersion != update.Version)
+                if(String.Compare(_currentVersion, update.Version) == -1)
                 {
                     logger.Log(LogSeverity.Info, "A new version of Wally is available.");
                     var mainWindow = (MainWindow)App.Current.MainWindow;
