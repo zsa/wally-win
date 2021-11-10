@@ -19,4 +19,6 @@ The following instructions apply only to those who wish to actively _develop_ Wa
 
 Wally is built using [C# and the WPF Framework](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/getting-started/walkthrough-my-first-wpf-desktop-application?view=netframeworkdesktop-4.8). It follows the [MVVM pattern](https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern). 
 
-Found a bug? Open an [issue here](https://github.com/zsa/wally-win/issues).
+## Sending feedback
+
+As you may have noticed, we do not have GitHub Issues enabled for this project. Instead, please submit all feedback via email to contact@zsa.io — you will find us very responsive. Thank you for your help with Wally!
