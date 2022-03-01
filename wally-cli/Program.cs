@@ -57,7 +57,6 @@ namespace CLI
                     }
                 });
                 spinner.Text = "Keyboard flashed, enjoy your new firmware.";
-                spinner.Text = $"{device.HidHandle.DefaultReportId}";
             });
         }
         static void PrintUsage()
