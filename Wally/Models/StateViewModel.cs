@@ -17,7 +17,7 @@ namespace Wally.Models
         private Device _selectedDevice;
         private void Flash()
         {
-            Logger.Log(LogSeverity.Info, $"Starting flash process, targeting {Target} devices.");
+            Logger.Log(LogSeverity.Info, $"Starting flash process, targeting {Target} device(s).");
             Task.Run(async () =>
             {
                 try
