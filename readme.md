@@ -1,4 +1,4 @@
-# Wally (detprecated)
+# Wally (deprecated)
 
 ⚠️⚠️⚠️ Wally is no longer maintained, instead please use our new flashing tool [Keymapp](https://www.zsa.io/flash#download)
 
